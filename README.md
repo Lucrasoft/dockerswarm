@@ -74,7 +74,7 @@ Create the filesystem
 
 Check filesystem is correcy
 
-``lsblk -f```
+```lsblk -f```
 
 ## Mount additional disk
 
