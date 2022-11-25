@@ -1,0 +1,44 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+  websecure:
+    address: :443
+    http:
+      tls:
+        certResolver: myresolver
+
+# Certificate resolvers?
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: "email@yourdomain.ltd"
+      storage: "acme.json"
+      httpChallenge:
+        entryPoint: web
+
+
+log:
+  # Default: "ERROR"
+  level: DEBUG
+
+providers:
+  # Enable Docker configuration backend
+  docker:
+    swarmMode: true
+    exposedByDefault: false
+    network: public
+    defaultRule: Host(`{{ index .Labels "com.docker.stack.namespace" }}.yourdomain.ltd`)
+
+metrics:
+  prometheus: {}
