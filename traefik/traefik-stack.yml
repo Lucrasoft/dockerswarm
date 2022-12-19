@@ -4,8 +4,10 @@ services:
   traefik:
     image: "traefik:v2.9"
     ports:
-      - "80:80"
-      - "443:443"
+      - "80:80"         #web
+      - "443:443"       #websecure
+      - "8080:8080"     #unifi specific port
+      - "3478:3478/udp" #unifi specific port 
     networks:
       - public
       - internal
@@ -24,5 +26,3 @@ networks:
     external: true
   internal:
     external: true
-    
-    
